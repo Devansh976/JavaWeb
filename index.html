@@ -1,0 +1,2989 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Minecraft Player Toolkit</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #101820;
+            color: white;
+            transition: 0.3s;
+        }
+
+        body.light {
+            background: #eef2f5;
+            color: #111827;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: #16232e;
+            border-bottom: 2px solid #33404a;
+        }
+
+        body.light header {
+            background: white;
+        }
+
+        header h1 {
+            color: #55ff55;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .search {
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .search input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #444;
+            background: #0b1116;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        body.light .search input {
+            background: #f8fafc;
+            color: #111827;
+        }
+
+        button {
+            padding: 11px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #55aa55;
+            color: white;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #448844;
+        }
+
+        .theme-btn {
+            margin-top: 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(320px, 1fr));
+
+            gap: 20px;
+        }
+
+        .card {
+            background: #182630;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #34434d;
+
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, 0.25);
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #55aa55;
+        }
+
+        body.light .card {
+            background: white;
+            border-color: #ddd;
+        }
+
+        .card h2 {
+            color: #55ff55;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            margin-bottom: 14px;
+
+            border-radius: 8px;
+            border: 1px solid #46545e;
+
+            background: #0b1116;
+            color: white;
+
+            font-size: 15px;
+        }
+
+        body.light input,
+        body.light select {
+            background: #f8fafc;
+            color: #111827;
+            border-color: #ccc;
+        }
+
+        label {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+
+            background: #0b1116;
+            border-radius: 8px;
+
+            min-height: 50px;
+            word-break: break-word;
+
+            border: 1px solid #303b43;
+        }
+
+        body.light .result {
+            background: #f1f5f9;
+            border-color: #ddd;
+        }
+
+        .copy-btn {
+            background: #3b82f6;
+            margin-left: 5px;
+        }
+
+        .copy-btn:hover {
+            background: #2563eb;
+        }
+
+        .health-bar {
+            width: 100%;
+            height: 25px;
+
+            background: #374151;
+
+            border-radius: 20px;
+            overflow: hidden;
+
+            margin-top: 15px;
+        }
+
+        .health-fill {
+            width: 0%;
+            height: 100%;
+
+            background: #ef4444;
+
+            transition: 0.5s;
+        }
+
+        .xp-box {
+            margin-top: 15px;
+            padding: 20px;
+
+            background: #0b1116;
+            border-radius: 10px;
+
+            text-align: center;
+        }
+
+        body.light .xp-box {
+            background: #f1f5f9;
+        }
+
+        .xp-number {
+            font-size: 32px;
+            font-weight: bold;
+
+            color: #55ff55;
+
+            margin-top: 10px;
+        }
+
+        .command-box {
+            margin-top: 15px;
+            padding: 15px;
+
+            background: #050505;
+            color: #55ff55;
+
+            border-radius: 8px;
+
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        .color-preview {
+            height: 80px;
+
+            border-radius: 10px;
+
+            margin: 15px 0;
+
+            border: 2px solid #555;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .ai-response {
+            margin-top: 15px;
+            padding: 15px;
+
+            background: #0b1116;
+
+            border-radius: 8px;
+
+            min-height: 100px;
+
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        body.light .ai-response {
+            background: #f1f5f9;
+        }
+
+        .ai-loading {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .ai-pickaxe {
+            font-size: 40px;
+
+            display: inline-block;
+
+            animation:
+                mining 0.7s infinite alternate;
+        }
+
+        .loading-bar {
+            width: 100%;
+            max-width: 300px;
+
+            height: 14px;
+
+            background: #222;
+
+            border-radius: 6px;
+
+            margin: 15px auto 0;
+
+            overflow: hidden;
+
+            border: 1px solid #444;
+        }
+
+        .loading-bar-fill {
+            height: 100%;
+            width: 30%;
+
+            background: #55ff55;
+
+            border-radius: 6px;
+
+            animation:
+                loadingBar 1.2s infinite ease-in-out;
+        }
+
+        @keyframes mining {
+
+            from {
+                transform: rotate(-25deg);
+            }
+
+            to {
+                transform: rotate(25deg);
+            }
+
+        }
+
+        @keyframes loadingBar {
+
+            0% {
+                transform: translateX(-120%);
+            }
+
+            100% {
+                transform: translateX(350%);
+            }
+
+        }
+
+        .dashboard {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(140px, 1fr));
+
+            gap: 10px;
+
+            margin-top: 15px;
+        }
+
+        .stat {
+            background: #0b1116;
+
+            border-radius: 10px;
+
+            padding: 18px;
+
+            text-align: center;
+        }
+
+        body.light .stat {
+            background: #f1f5f9;
+        }
+
+        .stat-number {
+            color: #55ff55;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            margin-top: 8px;
+        }
+
+        .recipe {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 55px);
+
+            gap: 5px;
+
+            justify-content: center;
+
+            margin: 15px 0;
+        }
+
+        .recipe-slot {
+            width: 55px;
+            height: 55px;
+
+            background: #292929;
+
+            border: 2px solid #555;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            font-size: 25px;
+        }
+
+        .saved-item {
+            background: #0b1116;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            margin-top: 8px;
+
+            word-break: break-word;
+        }
+
+        body.light .saved-item {
+            background: #f1f5f9;
+        }
+
+        .danger {
+            background: #dc2626;
+        }
+
+        .danger:hover {
+            background: #b91c1c;
+        }
+
+        .quick-buttons {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-top: 10px;
+        }
+
+        .quick-buttons button {
+            font-size: 12px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            text-align: center;
+
+            padding: 30px;
+
+            color: #777;
+
+            border-top: 1px solid #333;
+
+            margin-top: 30px;
+        }
+
+        @media(max-width:600px) {
+
+            header h1 {
+                font-size: 28px;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        🎮 Minecraft Player Toolkit
+    </h1>
+
+    <p>
+        Useful Minecraft tools made with JavaScript
+    </p>
+
+    <div class="search">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Search Minecraft tools..."
+            onkeyup="searchTools()"
+        >
+
+    </div>
+
+    <button
+        class="theme-btn"
+        onclick="toggleTheme()"
+    >
+        🌙 Toggle Theme
+    </button>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- NAME GENERATOR -->
+
+<div
+    class="card tool"
+    data-name="name generator username minecraft"
+>
+
+    <h2>
+        🎲 Random Minecraft Name
+    </h2>
+
+    <p>
+        Generate a random Minecraft username.
+    </p>
+
+    <button onclick="generateName()">
+        Generate Name
+    </button>
+
+    <div
+        class="result"
+        id="nameResult"
+    >
+        Your name will appear here...
+    </div>
+
+    <button
+        class="copy-btn"
+        onclick="copyElement('nameResult')"
+    >
+        📋 Copy Name
+    </button>
+
+</div>
+
+
+<!-- COLOR GENERATOR -->
+
+<div
+    class="card tool"
+    data-name="color generator minecraft color code"
+>
+
+    <h2>
+        🎨 Minecraft Color Generator
+    </h2>
+
+    <p>
+        Generate Minecraft color codes.
+    </p>
+
+    <button onclick="generateColor()">
+        Generate Color
+    </button>
+
+    <div
+        class="color-preview"
+        id="colorPreview"
+    >
+        Minecraft Color
+    </div>
+
+    <div
+        class="result"
+        id="colorResult"
+    >
+        Code: -
+        <br>
+        Color: -
+    </div>
+
+    <span
+        id="colorCode"
+        hidden
+    >
+        §a
+    </span>
+
+    <button
+        class="copy-btn"
+        onclick="copyElement('colorCode')"
+    >
+        📋 Copy Code
+    </button>
+
+</div>
+
+
+<!-- HEALTH -->
+
+<div
+    class="card tool"
+    data-name="health calculator hearts hp"
+>
+
+    <h2>
+        ❤️ Health Calculator
+    </h2>
+
+    <p>
+        Calculate Minecraft health percentage.
+    </p>
+
+    <label>
+        Current Health
+    </label>
+
+    <input
+        type="text"
+        id="currentHealth"
+        placeholder="Example: 15"
+    >
+
+    <label>
+        Maximum Health
+    </label>
+
+    <input
+        type="text"
+        id="maxHealth"
+        placeholder="Example: 20"
+    >
+
+    <button onclick="calculateHealth()">
+        Calculate Health
+    </button>
+
+    <div
+        class="result"
+        id="healthResult"
+    >
+        Health: --%
+    </div>
+
+    <div class="health-bar">
+
+        <div
+            class="health-fill"
+            id="healthFill"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- XP -->
+
+<div
+    class="card tool"
+    data-name="xp calculator experience level"
+>
+
+    <h2>
+        🧱 XP Calculator
+    </h2>
+
+    <p>
+        Calculate XP needed between levels.
+    </p>
+
+    <label>
+        Current Level
+    </label>
+
+    <input
+        type="number"
+        id="currentLevel"
+        placeholder="Example: 15"
+        min="0"
+    >
+
+    <label>
+        Target Level
+    </label>
+
+    <input
+        type="number"
+        id="targetLevel"
+        placeholder="Example: 30"
+        min="0"
+    >
+
+    <button onclick="calculateXP()">
+        Calculate XP
+    </button>
+
+    <div class="xp-box">
+
+        Current Level:
+        <strong id="displayCurrent">-</strong>
+
+        <br><br>
+
+        Target Level:
+        <strong id="displayTarget">-</strong>
+
+        <br><br>
+
+        XP Needed:
+
+        <div
+            class="xp-number"
+            id="xpResult"
+        >
+            ______ XP
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- COMMAND GENERATOR -->
+
+<div
+    class="card tool"
+    data-name="command generator minecraft effect"
+>
+
+    <h2>
+        ⚡ Minecraft Command Generator
+    </h2>
+
+    <p>
+        Generate Minecraft effect commands.
+    </p>
+
+    <label>
+        Player
+    </label>
+
+    <input
+        type="text"
+        id="playerName"
+        placeholder="Steve"
+        value="Steve"
+    >
+
+    <label>
+        Effect
+    </label>
+
+    <select id="effect">
+
+        <option value="speed">
+            Speed
+        </option>
+
+        <option value="slowness">
+            Slowness
+        </option>
+
+        <option value="haste">
+            Haste
+        </option>
+
+        <option value="strength">
+            Strength
+        </option>
+
+        <option value="jump_boost">
+            Jump Boost
+        </option>
+
+        <option value="regeneration">
+            Regeneration
+        </option>
+
+        <option value="resistance">
+            Resistance
+        </option>
+
+        <option value="fire_resistance">
+            Fire Resistance
+        </option>
+
+        <option value="water_breathing">
+            Water Breathing
+        </option>
+
+        <option value="night_vision">
+            Night Vision
+        </option>
+
+        <option value="invisibility">
+            Invisibility
+        </option>
+
+    </select>
+
+    <label>
+        Duration (seconds)
+    </label>
+
+    <input
+        type="number"
+        id="duration"
+        value="60"
+        min="1"
+    >
+
+    <label>
+        Level
+    </label>
+
+    <input
+        type="number"
+        id="effectLevel"
+        value="2"
+        min="1"
+    >
+
+    <button onclick="generateCommand()">
+        Generate Command
+    </button>
+
+    <div
+        class="command-box"
+        id="commandResult"
+    >
+        /effect give Steve speed 60 1
+    </div>
+
+    <button
+        class="copy-btn"
+        onclick="copyElement('commandResult')"
+    >
+        📋 Copy Command
+    </button>
+
+    <button onclick="saveCommand()">
+        💾 Save Command
+    </button>
+
+</div>
+
+
+<!-- POTION GENERATOR -->
+
+<div
+    class="card tool"
+    data-name="potion generator potion command effects"
+>
+
+    <h2>
+        🧪 Potion Command Generator
+    </h2>
+
+    <p>
+        Create potion effect commands.
+    </p>
+
+    <label>
+        Player
+    </label>
+
+    <input
+        type="text"
+        id="potionPlayer"
+        value="Steve"
+    >
+
+    <label>
+        Potion Effect
+    </label>
+
+    <select id="potionEffect">
+
+        <option value="speed">
+            Speed
+        </option>
+
+        <option value="strength">
+            Strength
+        </option>
+
+        <option value="haste">
+            Haste
+        </option>
+
+        <option value="jump_boost">
+            Jump Boost
+        </option>
+
+        <option value="regeneration">
+            Regeneration
+        </option>
+
+        <option value="resistance">
+            Resistance
+        </option>
+
+        <option value="fire_resistance">
+            Fire Resistance
+        </option>
+
+        <option value="night_vision">
+            Night Vision
+        </option>
+
+        <option value="water_breathing">
+            Water Breathing
+        </option>
+
+        <option value="invisibility">
+            Invisibility
+        </option>
+
+    </select>
+
+    <label>
+        Duration (seconds)
+    </label>
+
+    <input
+        type="number"
+        id="potionDuration"
+        value="60"
+        min="1"
+    >
+
+    <label>
+        Level
+    </label>
+
+    <input
+        type="number"
+        id="potionLevel"
+        value="1"
+        min="1"
+    >
+
+    <button onclick="generatePotion()">
+        🧪 Generate Potion
+    </button>
+
+    <div
+        class="command-box"
+        id="potionResult"
+    >
+        /effect give Steve speed 60 0
+    </div>
+
+    <button
+        class="copy-btn"
+        onclick="copyElement('potionResult')"
+    >
+        📋 Copy
+    </button>
+
+</div>
+
+
+<!-- NETHER CONVERTER -->
+
+<div
+    class="card tool"
+    data-name="nether coordinate converter overworld coordinates"
+>
+
+    <h2>
+        🌍 Nether Coordinate Converter
+    </h2>
+
+    <p>
+        Convert Overworld coordinates to Nether.
+    </p>
+
+    <label>
+        Overworld X
+    </label>
+
+    <input
+        type="number"
+        id="overworldX"
+        placeholder="800"
+    >
+
+    <label>
+        Overworld Y
+    </label>
+
+    <input
+        type="number"
+        id="overworldY"
+        placeholder="64"
+        value="64"
+    >
+
+    <label>
+        Overworld Z
+    </label>
+
+    <input
+        type="number"
+        id="overworldZ"
+        placeholder="-400"
+    >
+
+    <button onclick="convertToNether()">
+        🌋 Convert
+    </button>
+
+    <div
+        class="result"
+        id="netherResult"
+    >
+        Nether coordinates will appear here...
+    </div>
+
+    <button
+        class="copy-btn"
+        onclick="copyElement('netherResult')"
+    >
+        📋 Copy Coordinates
+    </button>
+
+    <button onclick="saveCoordinates()">
+        💾 Save Coordinates
+    </button>
+
+</div>
+
+
+<!-- INVENTORY -->
+
+<div
+    class="card tool"
+    data-name="inventory stack calculator items stacks"
+>
+
+    <h2>
+        📦 Inventory Stack Calculator
+    </h2>
+
+    <p>
+        Calculate stacks and remaining items.
+    </p>
+
+    <label>
+        Item
+    </label>
+
+    <input
+        type="text"
+        id="inventoryItem"
+        placeholder="Diamond"
+    >
+
+    <label>
+        Amount
+    </label>
+
+    <input
+        type="number"
+        id="inventoryAmount"
+        placeholder="347"
+        min="0"
+    >
+
+    <label>
+        Stack Size
+    </label>
+
+    <select id="stackSize">
+
+        <option value="64">
+            64
+        </option>
+
+        <option value="16">
+            16
+        </option>
+
+        <option value="1">
+            1
+        </option>
+
+    </select>
+
+    <button onclick="calculateInventory()">
+        📦 Calculate
+    </button>
+
+    <div
+        class="result"
+        id="inventoryResult"
+    >
+        Inventory result will appear here...
+    </div>
+
+</div>
+
+
+<!-- MOB CALCULATOR -->
+
+<div
+    class="card tool"
+    data-name="mob calculator minecraft mobs health damage xp drops"
+>
+
+    <h2>
+        ⚔️ Mob Calculator
+    </h2>
+
+    <p>
+        View basic Minecraft mob information.
+    </p>
+
+    <label>
+        Select Mob
+    </label>
+
+    <select
+        id="mobSelect"
+        onchange="showMob()"
+    >
+
+        <option value="zombie">
+            🧟 Zombie
+        </option>
+
+        <option value="skeleton">
+            💀 Skeleton
+        </option>
+
+        <option value="creeper">
+            💥 Creeper
+        </option>
+
+        <option value="spider">
+            🕷️ Spider
+        </option>
+
+        <option value="enderman">
+            👾 Enderman
+        </option>
+
+        <option value="blaze">
+            🔥 Blaze
+        </option>
+
+        <option value="warden">
+            👹 Warden
+        </option>
+
+        <option value="ender_dragon">
+            🐉 Ender Dragon
+        </option>
+
+    </select>
+
+    <div
+        class="result"
+        id="mobResult"
+    >
+        Select a mob.
+    </div>
+
+</div>
+
+
+<!-- CRAFTING -->
+
+<div
+    class="card tool"
+    data-name="crafting recipe viewer recipes crafting table"
+>
+
+    <h2>
+        🧱 Crafting Recipe Viewer
+    </h2>
+
+    <p>
+        View simple crafting recipes.
+    </p>
+
+    <label>
+        Select Item
+    </label>
+
+    <select
+        id="recipeSelect"
+        onchange="showRecipe()"
+    >
+
+        <option value="crafting_table">
+            Crafting Table
+        </option>
+
+        <option value="stick">
+            Stick
+        </option>
+
+        <option value="chest">
+            Chest
+        </option>
+
+        <option value="torch">
+            Torch
+        </option>
+
+        <option value="furnace">
+            Furnace
+        </option>
+
+        <option value="iron_block">
+            Iron Block
+        </option>
+
+    </select>
+
+    <div
+        class="recipe"
+        id="recipeGrid"
+    ></div>
+
+    <div
+        class="result"
+        id="recipeResult"
+    >
+        Select an item.
+    </div>
+
+</div>
+
+
+<!-- PLAYER DASHBOARD -->
+
+<div
+    class="card tool"
+    data-name="player dashboard player stats minecraft"
+>
+
+    <h2>
+        📊 Player Dashboard
+    </h2>
+
+    <p>
+        Enter your Minecraft stats.
+    </p>
+
+    <label>
+        Player Name
+    </label>
+
+    <input
+        type="text"
+        id="dashName"
+        placeholder="Steve"
+    >
+
+    <label>
+        Health
+    </label>
+
+    <input
+        type="number"
+        id="dashHealth"
+        placeholder="20"
+    >
+
+    <label>
+        XP Level
+    </label>
+
+    <input
+        type="number"
+        id="dashXP"
+        placeholder="30"
+    >
+
+    <label>
+        Diamonds
+    </label>
+
+    <input
+        type="number"
+        id="dashDiamonds"
+        placeholder="43"
+    >
+
+    <button onclick="updateDashboard()">
+        📊 Update Dashboard
+    </button>
+
+    <div class="dashboard">
+
+        <div class="stat">
+
+            👤 Player
+
+            <div
+                class="stat-number"
+                id="dashNameResult"
+            >
+                -
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            ❤️ Health
+
+            <div
+                class="stat-number"
+                id="dashHealthResult"
+            >
+                -
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            ⭐ Level
+
+            <div
+                class="stat-number"
+                id="dashXPResult"
+            >
+                -
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            💎 Diamonds
+
+            <div
+                class="stat-number"
+                id="dashDiamondResult"
+            >
+                -
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SAVED -->
+
+<div
+    class="card tool"
+    data-name="saved commands coordinates favorites save"
+>
+
+    <h2>
+        💾 Saved Items
+    </h2>
+
+    <p>
+        Your saved commands and coordinates.
+    </p>
+
+    <div id="savedList">
+
+        No saved items yet.
+
+    </div>
+
+    <button
+        class="danger"
+        onclick="clearSaved()"
+    >
+        🗑️ Clear Saved
+    </button>
+
+</div>
+
+
+<!-- AI -->
+
+<div
+    class="card tool"
+    data-name="ai assistant artificial intelligence minecraft question"
+>
+
+    <h2>
+        🤖 AI Minecraft Assistant
+    </h2>
+
+    <p>
+        Ask questions about Minecraft.
+    </p>
+
+    <label>
+        Your Question
+    </label>
+
+    <input
+        type="text"
+        id="aiQuestion"
+        placeholder="How do I make an iron farm?"
+        onkeydown="if(event.key==='Enter') askAI()"
+    >
+
+    <div class="quick-buttons">
+
+        <button onclick="quickAI('How do I make a Nether portal?')">
+            Nether Portal
+        </button>
+
+        <button onclick="quickAI('How do I find diamonds?')">
+            Diamonds
+        </button>
+
+        <button onclick="quickAI('How do I make an iron farm?')">
+            Iron Farm
+        </button>
+
+        <button onclick="quickAI('What are the best enchantments for a sword?')">
+            Enchantments
+        </button>
+
+    </div>
+
+    <button onclick="askAI()">
+        🤖 Ask AI
+    </button>
+
+    <div
+        class="ai-response"
+        id="aiResponse"
+    >
+        AI response will appear here...
+    </div>
+
+    <button
+        class="copy-btn"
+        onclick="copyElement('aiResponse')"
+    >
+        📋 Copy Answer
+    </button>
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+    🎮 Minecraft Player Toolkit
+
+    <br><br>
+
+    Made with HTML, CSS & JavaScript
+
+</footer>
+
+
+<script>
+
+
+/* =========================================
+   NAME GENERATOR
+========================================= */
+
+function generateName() {
+
+    const firstWords = [
+
+        "Shadow",
+        "Pixel",
+        "Dark",
+        "Crazy",
+        "Lucky",
+        "Epic",
+        "Ghost",
+        "Fire",
+        "Ice",
+        "Thunder",
+        "Wolf",
+        "Dragon",
+        "Ninja",
+        "Cyber",
+        "Block",
+        "Ender",
+        "Nether",
+        "Creeper"
+
+    ];
+
+    const secondWords = [
+
+        "Player",
+        "Miner",
+        "Craft",
+        "Gamer",
+        "King",
+        "Master",
+        "Warrior",
+        "Hunter",
+        "Builder",
+        "Knight",
+        "Legend",
+        "Digger",
+        "Pro"
+
+    ];
+
+    const first =
+        firstWords[
+            Math.floor(
+                Math.random() *
+                firstWords.length
+            )
+        ];
+
+    const second =
+        secondWords[
+            Math.floor(
+                Math.random() *
+                secondWords.length
+            )
+        ];
+
+    const number =
+        Math.floor(
+            Math.random() * 1000
+        );
+
+    document.getElementById(
+        "nameResult"
+    ).textContent =
+        first +
+        second +
+        number;
+
+}
+
+
+/* =========================================
+   COLORS
+========================================= */
+
+function generateColor() {
+
+    const colors = [
+
+        {
+            name: "Black",
+            code: "§0",
+            hex: "#000000"
+        },
+
+        {
+            name: "Dark Blue",
+            code: "§1",
+            hex: "#0000AA"
+        },
+
+        {
+            name: "Dark Green",
+            code: "§2",
+            hex: "#00AA00"
+        },
+
+        {
+            name: "Dark Aqua",
+            code: "§3",
+            hex: "#00AAAA"
+        },
+
+        {
+            name: "Dark Red",
+            code: "§4",
+            hex: "#AA0000"
+        },
+
+        {
+            name: "Dark Purple",
+            code: "§5",
+            hex: "#AA00AA"
+        },
+
+        {
+            name: "Gold",
+            code: "§6",
+            hex: "#FFAA00"
+        },
+
+        {
+            name: "Gray",
+            code: "§7",
+            hex: "#AAAAAA"
+        },
+
+        {
+            name: "Dark Gray",
+            code: "§8",
+            hex: "#555555"
+        },
+
+        {
+            name: "Blue",
+            code: "§9",
+            hex: "#5555FF"
+        },
+
+        {
+            name: "Green",
+            code: "§a",
+            hex: "#55FF55"
+        },
+
+        {
+            name: "Aqua",
+            code: "§b",
+            hex: "#55FFFF"
+        },
+
+        {
+            name: "Red",
+            code: "§c",
+            hex: "#FF5555"
+        },
+
+        {
+            name: "Light Purple",
+            code: "§d",
+            hex: "#FF55FF"
+        },
+
+        {
+            name: "Yellow",
+            code: "§e",
+            hex: "#FFFF55"
+        },
+
+        {
+            name: "White",
+            code: "§f",
+            hex: "#FFFFFF"
+        }
+
+    ];
+
+    const color =
+        colors[
+            Math.floor(
+                Math.random() *
+                colors.length
+            )
+        ];
+
+    document.getElementById(
+        "colorPreview"
+    ).style.background =
+        color.hex;
+
+    document.getElementById(
+        "colorPreview"
+    ).textContent =
+        color.name;
+
+    document.getElementById(
+        "colorResult"
+    ).innerHTML =
+        "Code: <strong>" +
+        color.code +
+        "</strong>" +
+        "<br>Color: <strong>" +
+        color.name +
+        "</strong>";
+
+    document.getElementById(
+        "colorCode"
+    ).textContent =
+        color.code;
+
+}
+
+
+/* =========================================
+   HEALTH
+========================================= */
+
+function calculateHealth() {
+
+    const currentInput =
+        document.getElementById(
+            "currentHealth"
+        ).value.trim();
+
+    const maxInput =
+        document.getElementById(
+            "maxHealth"
+        ).value.trim();
+
+    const result =
+        document.getElementById(
+            "healthResult"
+        );
+
+    const fill =
+        document.getElementById(
+            "healthFill"
+        );
+
+    if (
+        currentInput === "" ||
+        maxInput === ""
+    ) {
+
+        result.textContent =
+            "❌ Please fill both fields.";
+
+        fill.style.width =
+            "0%";
+
+        return;
+
+    }
+
+    const current =
+        Number(currentInput);
+
+    const max =
+        Number(maxInput);
+
+    if (
+        !Number.isFinite(current) ||
+        !Number.isFinite(max)
+    ) {
+
+        result.textContent =
+            "❌ Please enter valid numbers.";
+
+        fill.style.width =
+            "0%";
+
+        return;
+
+    }
+
+    if (max <= 0) {
+
+        result.textContent =
+            "❌ Maximum health must be greater than 0.";
+
+        fill.style.width =
+            "0%";
+
+        return;
+
+    }
+
+    if (current < 0) {
+
+        result.textContent =
+            "❌ Health cannot be negative.";
+
+        fill.style.width =
+            "0%";
+
+        return;
+
+    }
+
+    let percentage =
+        (current / max) * 100;
+
+    percentage =
+        Math.max(
+            0,
+            Math.min(
+                percentage,
+                100
+            )
+        );
+
+    result.textContent =
+        "Health: " +
+        percentage.toFixed(1) +
+        "% ❤️";
+
+    fill.style.width =
+        percentage + "%";
+
+}
+
+
+/* =========================================
+   XP
+========================================= */
+
+function xpForLevel(level) {
+
+    if (level <= 16) {
+
+        return (
+            level * level +
+            6 * level
+        );
+
+    }
+
+    if (level <= 31) {
+
+        return Math.floor(
+            2.5 *
+            level *
+            level -
+            40.5 *
+            level +
+            360
+        );
+
+    }
+
+    return Math.floor(
+        4.5 *
+        level *
+        level -
+        162.5 *
+        level +
+        2220
+    );
+
+}
+
+
+function calculateXP() {
+
+    const current =
+        Number(
+            document.getElementById(
+                "currentLevel"
+            ).value
+        );
+
+    const target =
+        Number(
+            document.getElementById(
+                "targetLevel"
+            ).value
+        );
+
+    if (
+        !Number.isFinite(current) ||
+        !Number.isFinite(target)
+    ) {
+
+        document.getElementById(
+            "xpResult"
+        ).textContent =
+            "Invalid XP";
+
+        return;
+
+    }
+
+    if (
+        current < 0 ||
+        target < 0
+    ) {
+
+        document.getElementById(
+            "xpResult"
+        ).textContent =
+            "Levels cannot be negative";
+
+        return;
+
+    }
+
+    if (
+        target <= current
+    ) {
+
+        document.getElementById(
+            "xpResult"
+        ).textContent =
+            "Target must be higher";
+
+        return;
+
+    }
+
+    const needed =
+        xpForLevel(target) -
+        xpForLevel(current);
+
+    document.getElementById(
+        "displayCurrent"
+    ).textContent =
+        current;
+
+    document.getElementById(
+        "displayTarget"
+    ).textContent =
+        target;
+
+    document.getElementById(
+        "xpResult"
+    ).textContent =
+        needed.toLocaleString() +
+        " XP";
+
+}
+
+
+/* =========================================
+   COMMAND
+========================================= */
+
+function generateCommand() {
+
+    const player =
+        document.getElementById(
+            "playerName"
+        ).value.trim();
+
+    const effect =
+        document.getElementById(
+            "effect"
+        ).value;
+
+    const duration =
+        Number(
+            document.getElementById(
+                "duration"
+            ).value
+        );
+
+    const level =
+        Number(
+            document.getElementById(
+                "effectLevel"
+            ).value
+        );
+
+    if (
+        player === "" ||
+        duration <= 0 ||
+        level <= 0
+    ) {
+
+        document.getElementById(
+            "commandResult"
+        ).textContent =
+            "❌ Please fill all fields.";
+
+        return;
+
+    }
+
+    const command =
+        "/effect give " +
+        player +
+        " " +
+        effect +
+        " " +
+        duration +
+        " " +
+        (level - 1);
+
+    document.getElementById(
+        "commandResult"
+    ).textContent =
+        command;
+
+}
+
+
+/* =========================================
+   POTION
+========================================= */
+
+function generatePotion() {
+
+    const player =
+        document.getElementById(
+            "potionPlayer"
+        ).value.trim();
+
+    const effect =
+        document.getElementById(
+            "potionEffect"
+        ).value;
+
+    const duration =
+        Number(
+            document.getElementById(
+                "potionDuration"
+            ).value
+        );
+
+    const level =
+        Number(
+            document.getElementById(
+                "potionLevel"
+            ).value
+        );
+
+    if (
+        player === "" ||
+        duration <= 0 ||
+        level <= 0
+    ) {
+
+        document.getElementById(
+            "potionResult"
+        ).textContent =
+            "❌ Please fill all fields.";
+
+        return;
+
+    }
+
+    const command =
+        "/effect give " +
+        player +
+        " " +
+        effect +
+        " " +
+        duration +
+        " " +
+        (level - 1);
+
+    document.getElementById(
+        "potionResult"
+    ).textContent =
+        command;
+
+}
+
+
+/* =========================================
+   NETHER
+========================================= */
+
+function convertToNether() {
+
+    const x =
+        Number(
+            document.getElementById(
+                "overworldX"
+            ).value
+        );
+
+    const y =
+        Number(
+            document.getElementById(
+                "overworldY"
+            ).value
+        );
+
+    const z =
+        Number(
+            document.getElementById(
+                "overworldZ"
+            ).value
+        );
+
+    if (
+        !Number.isFinite(x) ||
+        !Number.isFinite(y) ||
+        !Number.isFinite(z)
+    ) {
+
+        document.getElementById(
+            "netherResult"
+        ).textContent =
+            "❌ Enter valid coordinates.";
+
+        return;
+
+    }
+
+    const netherX =
+        Math.floor(x / 8);
+
+    const netherZ =
+        Math.floor(z / 8);
+
+    document.getElementById(
+        "netherResult"
+    ).textContent =
+        "Nether: X " +
+        netherX +
+        ", Y " +
+        y +
+        ", Z " +
+        netherZ;
+
+}
+
+
+/* =========================================
+   INVENTORY
+========================================= */
+
+function calculateInventory() {
+
+    const item =
+        document.getElementById(
+            "inventoryItem"
+        ).value.trim();
+
+    const amount =
+        Number(
+            document.getElementById(
+                "inventoryAmount"
+            ).value
+        );
+
+    const stack =
+        Number(
+            document.getElementById(
+                "stackSize"
+            ).value
+        );
+
+    if (
+        item === "" ||
+        !Number.isFinite(amount) ||
+        amount < 0
+    ) {
+
+        document.getElementById(
+            "inventoryResult"
+        ).textContent =
+            "❌ Enter valid information.";
+
+        return;
+
+    }
+
+    const stacks =
+        Math.floor(amount / stack);
+
+    const remaining =
+        amount % stack;
+
+    document.getElementById(
+        "inventoryResult"
+    ).innerHTML =
+
+        "📦 Item: <strong>" +
+        item +
+        "</strong><br><br>" +
+
+        "Amount: <strong>" +
+        amount +
+        "</strong><br>" +
+
+        "Stacks: <strong>" +
+        stacks +
+        "</strong><br>" +
+
+        "Remaining: <strong>" +
+        remaining +
+        "</strong>";
+
+}
+
+
+/* =========================================
+   MOB DATABASE
+========================================= */
+
+const mobs = {
+
+    zombie: {
+        health: 20,
+        damage: "Easy: 2–4",
+        xp: 5,
+        drop: "Rotten Flesh"
+    },
+
+    skeleton: {
+        health: 20,
+        damage: "Bow damage varies",
+        xp: 5,
+        drop: "Bones / Arrows"
+    },
+
+    creeper: {
+        health: 20,
+        damage: "Explosion",
+        xp: 5,
+        drop: "Gunpowder"
+    },
+
+    spider: {
+        health: 16,
+        damage: "2–3",
+        xp: 5,
+        drop: "String / Spider Eye"
+    },
+
+    enderman: {
+        health: 40,
+        damage: "High melee damage",
+        xp: 5,
+        drop: "Ender Pearl"
+    },
+
+    blaze: {
+        health: 20,
+        damage: "Fireballs / Melee",
+        xp: 10,
+        drop: "Blaze Rod"
+    },
+
+    warden: {
+        health: 500,
+        damage: "Extremely high",
+        xp: 5,
+        drop: "Sculk Catalyst"
+    },
+
+    ender_dragon: {
+        health: 200,
+        damage: "Dragon attacks",
+        xp: 12000,
+        drop: "Dragon Egg / XP"
+    }
+
+};
+
+
+function showMob() {
+
+    const mob =
+        document.getElementById(
+            "mobSelect"
+        ).value;
+
+    const data =
+        mobs[mob];
+
+    document.getElementById(
+        "mobResult"
+    ).innerHTML =
+
+        "❤️ Health: <strong>" +
+        data.health +
+        "</strong><br><br>" +
+
+        "⚔️ Damage: <strong>" +
+        data.damage +
+        "</strong><br><br>" +
+
+        "⭐ XP: <strong>" +
+        data.xp +
+        "</strong><br><br>" +
+
+        "📦 Drops: <strong>" +
+        data.drop +
+        "</strong>";
+
+}
+
+
+/* =========================================
+   CRAFTING RECIPES
+========================================= */
+
+const recipes = {
+
+    crafting_table: {
+
+        name: "Crafting Table",
+
+        pattern: [
+            "🪵",
+            "🪵",
+            "🪵",
+            "🪵"
+        ],
+
+        materials:
+            "4 Wooden Planks"
+
+    },
+
+    stick: {
+
+        name: "Stick",
+
+        pattern: [
+            "",
+            "🪵",
+            "🪵",
+            ""
+        ],
+
+        materials:
+            "2 Wooden Planks"
+
+    },
+
+    chest: {
+
+        name: "Chest",
+
+        pattern: [
+            "🪵🪵🪵",
+            "🪵 🪵",
+            "🪵🪵🪵"
+        ],
+
+        materials:
+            "8 Wooden Planks"
+
+    },
+
+    torch: {
+
+        name: "Torch",
+
+        pattern: [
+            "",
+            "🪨",
+            "🪵",
+            ""
+        ],
+
+        materials:
+            "1 Coal + 1 Stick"
+
+    },
+
+    furnace: {
+
+        name: "Furnace",
+
+        pattern: [
+            "🪨🪨🪨",
+            "🪨 🪨",
+            "🪨🪨🪨"
+        ],
+
+        materials:
+            "8 Cobblestone"
+
+    },
+
+    iron_block: {
+
+        name: "Block of Iron",
+
+        pattern: [
+            "🔩🔩🔩",
+            "🔩🔩🔩",
+            "🔩🔩🔩"
+        ],
+
+        materials:
+            "9 Iron Ingots"
+
+    }
+
+};
+
+
+function showRecipe() {
+
+    const selected =
+        document.getElementById(
+            "recipeSelect"
+        ).value;
+
+    const recipe =
+        recipes[selected];
+
+    const grid =
+        document.getElementById(
+            "recipeGrid"
+        );
+
+    grid.innerHTML = "";
+
+    let slots = [];
+
+    if (
+        recipe.pattern.length === 3
+    ) {
+
+        recipe.pattern.forEach(
+            row => {
+
+                const chars =
+                    [...row];
+
+                while (
+                    chars.length < 3
+                ) {
+                    chars.push("");
+                }
+
+                slots =
+                    slots.concat(chars);
+
+            }
+        );
+
+    } else {
+
+        slots = [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ];
+
+    }
+
+    slots.forEach(
+        item => {
+
+            const slot =
+                document.createElement(
+                    "div"
+                );
+
+            slot.className =
+                "recipe-slot";
+
+            slot.textContent =
+                item || "";
+
+            grid.appendChild(slot);
+
+        }
+    );
+
+    document.getElementById(
+        "recipeResult"
+    ).innerHTML =
+
+        "<strong>" +
+        recipe.name +
+        "</strong><br><br>" +
+
+        "📦 Materials: " +
+        recipe.materials;
+
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+function updateDashboard() {
+
+    const name =
+        document.getElementById(
+            "dashName"
+        ).value.trim();
+
+    const health =
+        document.getElementById(
+            "dashHealth"
+        ).value;
+
+    const xp =
+        document.getElementById(
+            "dashXP"
+        ).value;
+
+    const diamonds =
+        document.getElementById(
+            "dashDiamonds"
+        ).value;
+
+    document.getElementById(
+        "dashNameResult"
+    ).textContent =
+        name || "-";
+
+    document.getElementById(
+        "dashHealthResult"
+    ).textContent =
+        health || "-";
+
+    document.getElementById(
+        "dashXPResult"
+    ).textContent =
+        xp || "-";
+
+    document.getElementById(
+        "dashDiamondResult"
+    ).textContent =
+        diamonds || "-";
+
+}
+
+
+/* =========================================
+   SAVE COMMAND
+========================================= */
+
+function getSaved() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "minecraftToolkitSaved"
+        ) || "[]"
+    );
+
+}
+
+
+function saveItem(type, value) {
+
+    const saved =
+        getSaved();
+
+    saved.push({
+        type: type,
+        value: value,
+        time: new Date().toLocaleString()
+    });
+
+    localStorage.setItem(
+        "minecraftToolkitSaved",
+        JSON.stringify(saved)
+    );
+
+    showSaved();
+
+}
+
+
+function saveCommand() {
+
+    const command =
+        document.getElementById(
+            "commandResult"
+        ).textContent;
+
+    if (
+        command.startsWith("/")
+    ) {
+
+        saveItem(
+            "Command",
+            command
+        );
+
+    }
+
+}
+
+
+function saveCoordinates() {
+
+    const coordinates =
+        document.getElementById(
+            "netherResult"
+        ).textContent;
+
+    if (
+        coordinates.includes("Nether:")
+    ) {
+
+        saveItem(
+            "Coordinates",
+            coordinates
+        );
+
+    }
+
+}
+
+
+function showSaved() {
+
+    const saved =
+        getSaved();
+
+    const list =
+        document.getElementById(
+            "savedList"
+        );
+
+    if (
+        saved.length === 0
+    ) {
+
+        list.textContent =
+            "No saved items yet.";
+
+        return;
+
+    }
+
+    list.innerHTML = "";
+
+    saved.forEach(
+        item => {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.className =
+                "saved-item";
+
+            div.innerHTML =
+
+                "<strong>" +
+                item.type +
+                "</strong><br>" +
+
+                item.value +
+                "<br>" +
+
+                "<small>" +
+                item.time +
+                "</small>";
+
+            list.appendChild(div);
+
+        }
+    );
+
+}
+
+
+function clearSaved() {
+
+    localStorage.removeItem(
+        "minecraftToolkitSaved"
+    );
+
+    showSaved();
+
+}
+
+
+/* =========================================
+   COPY
+========================================= */
+
+function copyElement(id) {
+
+    const element =
+        document.getElementById(id);
+
+    const text =
+        element.textContent;
+
+    navigator.clipboard.writeText(
+        text
+    )
+
+    .then(
+        function() {
+
+            alert(
+                "✅ Copied!"
+            );
+
+        }
+    )
+
+    .catch(
+        function() {
+
+            alert(
+                "❌ Copy failed."
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   THEME
+========================================= */
+
+function toggleTheme() {
+
+    document.body.classList.toggle(
+        "light"
+    );
+
+    const button =
+        document.querySelector(
+            ".theme-btn"
+        );
+
+    if (
+        document.body.classList.contains(
+            "light"
+        )
+    ) {
+
+        button.textContent =
+            "☀️ Toggle Theme";
+
+    } else {
+
+        button.textContent =
+            "🌙 Toggle Theme";
+
+    }
+
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+function searchTools() {
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value.toLowerCase();
+
+    const tools =
+        document.querySelectorAll(
+            ".tool"
+        );
+
+    tools.forEach(
+        function(tool) {
+
+            const name =
+                tool.dataset.name
+                    .toLowerCase();
+
+            if (
+                name.includes(search)
+            ) {
+
+                tool.classList.remove(
+                    "hidden"
+                );
+
+            } else {
+
+                tool.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   AI QUICK QUESTIONS
+========================================= */
+
+function quickAI(question) {
+
+    document.getElementById(
+        "aiQuestion"
+    ).value =
+        question;
+
+    askAI();
+
+}
+
+
+/* =========================================
+   AI ASSISTANT
+========================================= */
+
+async function askAI() {
+
+    const question =
+        document.getElementById(
+            "aiQuestion"
+        ).value.trim();
+
+    const response =
+        document.getElementById(
+            "aiResponse"
+        );
+
+    if (
+        question === ""
+    ) {
+
+        response.innerHTML =
+            "❌ Please enter a Minecraft question.";
+
+        return;
+
+    }
+
+    response.innerHTML = `
+
+        <div class="ai-loading">
+
+            <div>
+                <strong>
+                    🤖 AI Assistant
+                </strong>
+            </div>
+
+            <br>
+
+            <div class="ai-pickaxe">
+                ⛏️
+            </div>
+
+            <div>
+                Mining the answer...
+            </div>
+
+            <div class="loading-bar">
+
+                <div
+                    class="loading-bar-fill"
+                ></div>
+
+            </div>
+
+        </div>
+
+    `;
+
+    try {
+
+        const result =
+            await fetch(
+                "/api/ask",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            question:
+                                question
+
+                        })
+
+                }
+            );
+
+        const data =
+            await result.json();
+
+        if (
+            !result.ok
+        ) {
+
+            response.innerHTML =
+
+                "<strong>🤖 AI Assistant</strong>" +
+
+                "<br><br>" +
+
+                "❌ " +
+
+                (
+                    data.error ||
+                    "Something went wrong."
+                );
+
+            return;
+
+        }
+
+        const answer =
+            data.answer ||
+            "No answer received.";
+
+        response.innerHTML =
+
+            "<strong>🤖 AI Assistant</strong>" +
+
+            "<br><br>" +
+
+            answer
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /\n/g,
+                    "<br>"
+                );
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "AI ERROR:",
+            error
+        );
+
+        response.innerHTML =
+
+            "<strong>🤖 AI Assistant</strong>" +
+
+            "<br><br>" +
+
+            "❌ Could not connect to the AI server." +
+
+            "<br><br>" +
+
+            "Make sure " +
+
+            "<strong>node server.js</strong>" +
+
+            " is running.";
+
+    }
+
+}
+
+
+/* =========================================
+   INITIAL LOAD
+========================================= */
+
+showMob();
+
+showRecipe();
+
+showSaved();
+
+
+</script>
+
+
+</body>
+
+</html>

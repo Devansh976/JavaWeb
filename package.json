@@ -1,0 +1,14 @@
+{
+  "name": "minecraft-javaweb",
+  "version": "1.0.0",
+  "description": "Minecraft Player Toolkit with AI Assistant",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "openai": "^5.16.0"
+  }
+}
